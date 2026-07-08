@@ -1,0 +1,110 @@
+@page "/medical-tests"
+@using Clayzor.Lib.Web.Settings
+@using Clayzor.Lib.Web.Controls
+@inherits ClayGridPageBase<MedicalTest>
+@inject ClayAppSettings AppSettings
+
+<PageTitle>Медицинские исследования</PageTitle>
+
+<ClayGrid TEntity="IClayGridRow"
+           @ref="_dataGrid"
+           DataLoader="this"
+           Title="Медицинские исследования"
+            Id="clay-grid-root"
+           SelectSql="@SQLQueries.SELECT_МедицинскиеАнализы"
+           SearchColumns="@(new[]{"НазваниеАнализа","TestTypeName"})"
+           DefaultOrder="Порядок, НазваниеАнализа"
+           EditDialogType="@typeof(MedicalTestEditDialog)"
+           Items="_rows"
+           Loading="_loading"
+           PageSize="@AppSettings.DefaultPageSize"
+           FilterColumnTypes="@FilterColumnTypes"
+            TotalCount="@_query.TotalCount"
+            PageNumber="@_query.PageNumber"
+            ShowPagination="true"
+            ColumnMenuMode="@ColumnMenuMode.Always"
+            SelectVisible="true"
+            ShowPrint="true"
+            ShowExcel="true"
+            OnAdd="OpenAddDialog"
+            OnGroupToggle="ToggleGroup">
+
+    <ColumnDefs>
+        <ClayColumnDef ColumnId="1" SqlName="TestTypeName"            DisplayName="Тип"         Groupable="true" Filterable="true" AllowValueFilter="true" />
+        <ClayColumnDef ColumnId="2" SqlName="КодМедицинскогоАнализа" DisplayName="Код"         Groupable="true" Filterable="true" AllowValueFilter="true" />
+        <ClayColumnDef ColumnId="3" SqlName="НазваниеАнализа"        DisplayName="Название"    Groupable="true" Filterable="true" AllowValueFilter="true" />
+        <ClayColumnDef ColumnId="4" SqlName="Порядок"                DisplayName="Порядок"     Groupable="true" Filterable="true" AllowValueFilter="true" />
+        <ClayColumnDef ColumnId="5" SqlName="Группа"                 DisplayName="Группа"                       Filterable="true" AllowValueFilter="true" BoolTrueLabel="Группа" BoolFalseLabel="Не группа" />
+        <ClayColumnDef ColumnId="6" SqlName="Заключение"             DisplayName="Заключение"                   Filterable="true" AllowValueFilter="true" BoolTrueLabel="Заключение" BoolFalseLabel="Не заключение" />
+    </ColumnDefs>
+
+    <Columns>
+
+        <ClayColumn TEntity="IClayGridRow" ColumnId="2">
+            <CellTemplate>
+                @if (context.Item is DetailRow<MedicalTest> detail)
+                {
+                    <MudText Style="@($"padding-left:{(detail.Depth + 1) * 16}px")">@detail.Item.Id</MudText>
+                }
+            </CellTemplate>
+        </ClayColumn>
+
+        <ClayColumn TEntity="IClayGridRow" ColumnId="3">
+            <CellTemplate>
+                @if (context.Item is DetailRow<MedicalTest> detail)
+                {
+                    <MudText>@detail.Item.Name</MudText>
+                }
+            </CellTemplate>
+        </ClayColumn>
+
+        <ClayColumn TEntity="IClayGridRow" ColumnId="1">
+            <CellTemplate>
+                @if (context.Item is DetailRow<MedicalTest> detail)
+                {
+                    <MudText>@detail.Item.TestTypeName</MudText>
+                }
+            </CellTemplate>
+        </ClayColumn>
+
+        <ClayColumn TEntity="IClayGridRow" ColumnId="4">
+            <CellTemplate>
+                @if (context.Item is DetailRow<MedicalTest> detail)
+                {
+                    <MudText>@detail.Item.Order</MudText>
+                }
+            </CellTemplate>
+        </ClayColumn>
+
+        <ClayColumn TEntity="IClayGridRow" ColumnId="5">
+            <CellTemplate>
+                @if (context.Item is DetailRow<MedicalTest> detail)
+                {
+                    <MudIcon Icon="@(detail.Item.IsGroup ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)"
+                             Color="@(detail.Item.IsGroup ? Color.Success : Color.Default)"
+                             Size="Size.Small" />
+                }
+            </CellTemplate>
+        </ClayColumn>
+
+        <ClayColumn TEntity="IClayGridRow" ColumnId="6">
+            <CellTemplate>
+                @if (context.Item is DetailRow<MedicalTest> detail)
+                {
+                    <MudIcon Icon="@(detail.Item.IsConclusion ? Icons.Material.Filled.CheckCircle : Icons.Material.Filled.Cancel)"
+                             Color="@(detail.Item.IsConclusion ? Color.Success : Color.Default)"
+                             Size="Size.Small" />
+                }
+            </CellTemplate>
+        </ClayColumn>
+
+    </Columns>
+
+</ClayGrid>
+
+@code {
+    // Поле конкретного типа нужно для @ref и вызовов UI-методов (ToggleSort, GetSortBadge, GroupColumns).
+    // Grid в базовом классе заполняется через переопределение свойства.
+    private ClayGrid<IClayGridRow> _dataGrid = null!;
+    protected override IClayGrid? Grid => _dataGrid;
+}
