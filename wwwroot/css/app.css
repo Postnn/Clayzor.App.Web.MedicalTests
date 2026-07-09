@@ -606,6 +606,7 @@ body {
     opacity: 0.45;
     flex-shrink: 0;
     margin-right: 4px;
+    padding: 0 !important;
 }
 
 .filter-tray:has(.filter-chip) .filter-tray-icon {
