@@ -2,6 +2,7 @@ using Clayzor.App.Web.MedicalTests.Components;
 using Clayzor.Lib.DALC;
 using Clayzor.Lib.Entities.MedicalTests;
 using Clayzor.Lib.Web.Controls;
+using Clayzor.Lib.Web.Controls.Components.Grid.Dynamic;
 using Clayzor.Lib.Web.Settings;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using MudBlazor.Extensions;
@@ -17,6 +18,9 @@ builder.Services.AddSingleton(claySettings);
 
 // Dapper column mapping
 DapperColumnMapper.Initialize();
+
+// Динамический режим ClayGrid
+builder.Services.AddClayGridDynamic(builder.Configuration);
 
 // Сервис глобального отображения ошибок
 builder.Services.AddScoped<ClayErrorService>();
