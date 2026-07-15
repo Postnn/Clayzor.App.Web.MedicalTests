@@ -1164,6 +1164,10 @@ body {
     cursor: pointer;
 }
 
+.clay-grid-error {
+    margin-top: 8px;
+}
+
 /* ── Column settings dialog ── */
 .clay-column-settings-header {
     position: sticky;
