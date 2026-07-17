@@ -16,7 +16,8 @@
 Закон стиля — `STYLE_RULES.md`.
 
 **All visual styling (color, font, background, border, shadow, radius) lives ONLY in:**
-- `Clayzor.App.Web.MedicalTests/wwwroot/css/app.css` — CSS classes and `:root` tokens
+- `Clayzor.Lib.Web.Controls/wwwroot/css/clay.css` — общий стиль компонентов RCL
+- `<App>/wwwroot/css/app.css` — специфика конкретного приложения (напр. Dense form)
 - `Clayzor.Lib.Web.Controls/Themes/ClayTheme.cs` — MudBlazor theme palette
 - `Clayzor.Lib.Web.Controls/Themes/ClayColors.cs` — single source of brand hex values
 
