@@ -7,27 +7,15 @@
 <PageTitle>Медицинские исследования</PageTitle>
 
 <ClayGrid TEntity="IClayGridRow"
-           @ref="_dataGrid"
-           DataLoader="this"
-           Title="Медицинские исследования"
-            Id="clay-grid-root"
-           SelectSql="@SQLQueries.SELECT_МедицинскиеАнализы"
-           SearchColumns="@(new[]{"НазваниеАнализа","TestTypeName"})"
-           DefaultOrder="Порядок, НазваниеАнализа"
-           EditDialogType="@typeof(MedicalTestEditDialog)"
-           Items="_rows"
-           Loading="_loading"
-           PageSize="@AppSettings.DefaultPageSize"
-           FilterColumnTypes="@FilterColumnTypes"
-            TotalCount="@_query.TotalCount"
-            PageNumber="@_query.PageNumber"
-            ShowPagination="true"
-            ColumnMenuMode="@ColumnMenuMode.Always"
-            SelectVisible="true"
-            ShowPrint="true"
-            ShowExcel="true"
-            OnAdd="OpenAddDialog"
-            OnGroupToggle="ToggleGroup">
+          @ref="_dataGrid"
+          Options="_gridOptions"
+          DataLoader="this"
+          Items="_rows"
+          Loading="_loading"
+          TotalCount="@_query.TotalCount"
+          PageNumber="@_query.PageNumber"
+          OnAdd="OpenAddDialog"
+          OnGroupToggle="ToggleGroup">
 
     <ColumnDefs>
         <ClayColumnDef ColumnId="1" SqlName="TestTypeName"            DisplayName="Тип"         Groupable="true" Filterable="true" AllowValueFilter="true" />
@@ -103,8 +91,28 @@
 </ClayGrid>
 
 @code {
-    // Поле конкретного типа нужно для @ref и вызовов UI-методов (ToggleSort, GetSortBadge, GroupColumns).
-    // Grid в базовом классе заполняется через переопределение свойства.
     private ClayGrid<IClayGridRow> _dataGrid = null!;
     protected override IClayGrid? Grid => _dataGrid;
+
+    private ClayGridOptions _gridOptions = null!;
+
+    protected override void OnInitialized()
+    {
+        _gridOptions = new ClayGridOptions
+        {
+            Title             = "Медицинские исследования",
+            Id                = "clay-grid-root",
+            SelectSql         = SQLQueries.SELECT_МедицинскиеАнализы,
+            SearchColumns     = ["НазваниеАнализа", "TestTypeName"],
+            DefaultOrder      = "Порядок, НазваниеАнализа",
+            EditDialogType    = typeof(MedicalTestEditDialog),
+            PageSize          = AppSettings.DefaultPageSize,
+            FilterColumnTypes = FilterColumnTypes,
+            ShowPagination    = true,
+            ColumnMenuMode    = ColumnMenuMode.Always,
+            SelectVisible     = true,
+            ShowPrint         = true,
+            ShowExcel         = true,
+        };
+    }
 }
