@@ -2,7 +2,7 @@ using Clayzor.App.Web.MedicalTests.Components;
 using Clayzor.Lib.DALC;
 using Clayzor.Lib.Entities.MedicalTests;
 using Clayzor.Lib.Web.Controls;
-using Clayzor.Lib.Web.Controls.Components.Grid.Dynamic;
+using Clayzor.Lib.Web.Controls.Services;
 using Clayzor.Lib.Web.Settings;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using MudBlazor.Extensions;
