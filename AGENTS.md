@@ -2,9 +2,9 @@
 
 ## Typography & Fonts
 
-- Font face: **Verdana** + fallback `Arial, sans-serif` — defined via CSS variable `--clay-font-family`
-- Font size: **0.8rem** (~13pt) — defined via CSS variable `--clay-font-size` (single token, NO size variants)
-- MudBlazor typography (`ClayTheme.cs`) — all levels (Default, Body1, Body2, Subtitle1, Subtitle2, Caption, Overline) set `FontSize = "var(--clay-font-size)"`. H4/H5/H6/Button keep their own sizes (heading/button scale)
+- Font face: **Verdana** + fallback `Arial, sans-serif` — defined via CSS variable `--clay-font-family`; шрифты Lufthansa в design-файл не включены и не загружаются из CDN
+- Font size: **0.875rem** (14px) — `--clay-font-size`; secondary metadata: **0.8125rem** (13px) — `--clay-font-size-secondary`
+- MudBlazor typography (`ClayTheme.cs`) — Default, Body1, Body2, Subtitle1 и Subtitle2 используют `--clay-font-size`; Caption и Overline — `--clay-font-size-secondary`. H4/H5/H6/Button keep their own sizes (heading/button scale); Button — 14px/700 без uppercase
 - MudBlazor input controls use `font-size: var(--clay-font-size) !important` (CSS rules in `app.css` for `.mud-input-control input`, `.mud-input-slot`, `.mud-input-label-outlined`, and `.mud-input-outlined-border legend`)
 - MudBlazor outlined labels use `transform: scale(0.75)` by default — overridden in `app.css` via `scale(1)` with `!important` on both `.mud-input.mud-shrink ~ .mud-input-label-outlined` and `.mud-input-control:focus-within .mud-input-label-outlined`. Key detail: `mud-shrink` class is on `div.mud-input`, NOT on the `<label>` — label is a sibling AFTER `.mud-input`, so the selector uses `~` (general sibling combinator). Focused empty fields have NO `mud-shrink` class, hence the separate `:focus-within` selector.
 - Legend notch in outlined border is sized via `font-size: var(--clay-font-size) !important` on `.mud-input-outlined-border legend` (both `.mud-shrink` and `:focus-within` variants)
