@@ -3,6 +3,8 @@ using Clayzor.Lib.DALC;
 using Clayzor.Lib.Entities.MedicalTests;
 using Clayzor.Lib.Web.Controls;
 using Clayzor.Lib.Web.Controls.Services;
+using Clayzor.Lib.Web.Controls.Themes;
+using Microsoft.AspNetCore.Components.Authorization;
 using Clayzor.Lib.Web.Settings;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 using MudBlazor.Extensions;
@@ -35,6 +37,10 @@ builder.Services.AddScoped<ClayDbReconnectService>();
 // Аутентификация: Windows (Kerberos/NTLM)
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
     .AddNegotiate();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddInventoryThemePreferences(
+    async scope => (await scope.GetRequiredService<AuthenticationStateProvider>().GetAuthenticationStateAsync()).User,
+    scope => new ClayAppSettings { ConnectionString = scope.GetRequiredService<IConfiguration>().GetConnectionString("InventoryTheme") ?? string.Empty });
 builder.Services.AddAuthorization(options =>
 {
     options.FallbackPolicy = options.DefaultPolicy;

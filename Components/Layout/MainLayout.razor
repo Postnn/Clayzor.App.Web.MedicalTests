@@ -5,7 +5,7 @@
 @inject ClayAppSettings AppSettings
 @inject IHttpContextAccessor HttpContextAccessor
 
-<ClayThemeTokenProvider Theme="_theme" @bind-IsDarkMode="_isDarkMode" ObserveSystemDarkModeChange="false" />
+<ClayThemeHost />
 <MudPopoverProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
@@ -27,10 +27,7 @@
             <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" />
             <MudText Typo="Typo.body2" Class="clay-drawer-username">@_userName</MudText>
             <MudDivider Vertical="true" FlexItem="true" Class="mx-2 clay-appbar-divider" />
-            <MudIconButton Icon="@(_isDarkMode ? Icons.Material.Filled.LightMode : Icons.Material.Filled.DarkMode)"
-                           Color="Color.Inherit"
-                           Size="Size.Small"
-                           OnClick="@(() => _isDarkMode = !_isDarkMode)" />
+            <ClayThemeSelector />
         </MudStack>
     </MudAppBar>
 
@@ -65,8 +62,6 @@
 </MudLayout>
 
 @code {
-    private MudTheme _theme = ClayTheme.Create();
-    private bool _isDarkMode;
     private bool _drawerOpen;
     private string _userName = string.Empty;
 
