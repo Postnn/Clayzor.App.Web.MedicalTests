@@ -1,5 +1,6 @@
 @inherits LayoutComponentBase
 @using Clayzor.Lib.Web.Controls.Themes
+@using Clayzor.Lib.Web.Controls.Components.Form
 @using Clayzor.Lib.Web.Settings
 
 @inject ClayAppSettings AppSettings
@@ -26,8 +27,6 @@
         <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
             <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" />
             <MudText Typo="Typo.body2" Class="clay-drawer-username">@_userName</MudText>
-            <MudDivider Vertical="true" FlexItem="true" Class="mx-2 clay-appbar-divider" />
-            <ClayThemeSelector />
         </MudStack>
     </MudAppBar>
 
@@ -57,6 +56,7 @@
     <MudMainContent Class="pa-6">
         <ClayErrorBar />
         <ClayDbReconnectOverlay />
+        <ClayFormActions />
         @Body
     </MudMainContent>
 </MudLayout>
